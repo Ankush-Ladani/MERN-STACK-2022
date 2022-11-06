@@ -2,6 +2,7 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Link as RouterLink } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -70,6 +71,15 @@ export default function SignIn() {
           >
             Sign In
           </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <RouterLink to="/register">
+                <Link component="span" href="#" variant="body2">
+                  Dont't have an account? Sign Up
+                </Link>
+              </RouterLink>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

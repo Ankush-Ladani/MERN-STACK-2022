@@ -15,13 +15,27 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
 
 export default function Register() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const form = {
       email: data.get("email"),
       password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+    };
+
+    const res = await fetch("http://localhost:4000/auth/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
     });
+    if (res.ok) {
+      window.alert("Done!!");
+    }
   };
 
   return (
@@ -97,7 +111,7 @@ export default function Register() {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <RouterLink to="/login">
-                <Link href="#" variant="body2">
+                <Link component="span" href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </RouterLink>

@@ -14,7 +14,7 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link className="text-white" to="/" exact>
+            <Link className="text-white" to="/">
               Expanse Tracker
             </Link>
           </Typography>
