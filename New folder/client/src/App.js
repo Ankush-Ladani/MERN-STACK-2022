@@ -4,14 +4,9 @@ import ButtonAppBar from "./components/AppBar";
 import Card from "./components/Card";
 import TransactionsList from "./components/TransactionsList";
 
-const InitialForm = {
-  amount: 0,
-  description: "",
-  date: "",
-};
-
 function App() {
   const [transactions, setTransactions] = useState([]);
+  const [edittransactions, setEditTransactions] = useState({});
 
   useEffect(() => {
     fetchTransctions();
@@ -27,10 +22,14 @@ function App() {
     <div>
       <ButtonAppBar />
       <Container>
-        <Card fetchTransctions={fetchTransctions} />
+        <Card
+          edittransactions={edittransactions}
+          fetchTransctions={fetchTransctions}
+        />
         <TransactionsList
           transactions={transactions}
           fetchTransctions={fetchTransctions}
+          setEditTransactions={setEditTransactions}
         />
       </Container>
     </div>

@@ -9,8 +9,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IconButton, Typography } from "@mui/material";
+import dayjs from "dayjs";
 
-export default function TransactionsList({ transactions, fetchTransctions }) {
+export default function TransactionsList({
+  transactions,
+  fetchTransctions,
+  setEditTransactions,
+}) {
   async function remove(_id) {
     if (!window.confirm("Are you sure")) return;
     const res = await fetch(`http://localhost:4000/transaction/${_id}`, {
@@ -21,6 +26,11 @@ export default function TransactionsList({ transactions, fetchTransctions }) {
       window.alert("Deleted Successfully");
     }
   }
+
+  function formatDate(date) {
+    return dayjs(date).format("DD MMM , YYYY");
+  }
+
   return (
     <>
       <Typography variant="h6" sx={{ marginTop: 5 }}>
@@ -46,9 +56,13 @@ export default function TransactionsList({ transactions, fetchTransctions }) {
                   {row.amount}
                 </TableCell>
                 <TableCell align="center">{row.description}</TableCell>
-                <TableCell align="center">{row.date}</TableCell>
+                <TableCell align="center">{formatDate(row.date)}</TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" component="label">
+                  <IconButton
+                    onClick={() => setEditTransactions(row)}
+                    color="primary"
+                    component="label"
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton

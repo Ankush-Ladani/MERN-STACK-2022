@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   const transaction = await Transaction.find({}).sort({ createdAt: -1 });
-  res.json({ data: transaction });
+  res.json({ data: transaction, message: "Succesfull" });
 });
 router.delete("/:id", async (req, res) => {
   await Transaction.deleteOne({ _id: req.params.id });
@@ -21,6 +21,11 @@ router.post("/", async (req, res) => {
   });
   await transaction.save();
   res.json({ message: "Success" });
+});
+
+router.patch("/:id", async (req, res) => {
+  await Transaction.updateOne({ _id: req.params.id }, { $set: req.body });
+  res.json({ message: "Updated Successfully" });
 });
 
 export default router;
