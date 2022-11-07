@@ -8,13 +8,15 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 
 export default function Register() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -24,17 +26,15 @@ export default function Register() {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
     };
-
     const res = await fetch("http://localhost:4000/auth/register", {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
     });
     if (res.ok) {
-      window.alert("Done!!");
+      navigate("/login");
     }
   };
 
