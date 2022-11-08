@@ -26,7 +26,7 @@ export default function Register() {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
     };
-    const res = await fetch("http://localhost:4000/auth/register", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

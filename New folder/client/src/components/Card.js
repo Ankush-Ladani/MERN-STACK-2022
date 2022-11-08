@@ -46,7 +46,7 @@ export default function TransactionForm({
     const res = edittransactions.amount === undefined ? create() : update();
 
     async function create() {
-      const res = await fetch("http://localhost:4000/transaction", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
         method: "POST",
         body: JSON.stringify(form),
         headers: {
@@ -57,7 +57,7 @@ export default function TransactionForm({
     }
     async function update() {
       const res = await fetch(
-        `http://localhost:4000/transaction/${edittransactions._id}`,
+        `${process.env.REACT_APP_API_URL}/transaction/${edittransactions._id}`,
         {
           method: "PATCH",
           body: JSON.stringify(form),

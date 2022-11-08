@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 
 async function connect() {
-  await mongoose.connect(
-    "mongodb+srv://AnkushLadani:bxW9kaziazEUOurY@cluster0.h58lim7.mongodb.net/?retryWrites=true&w=majority"
-  );
+  await mongoose.connect(process.env.MONGO_URL);
   console.log("MongoDB connection is successful");
 }
 

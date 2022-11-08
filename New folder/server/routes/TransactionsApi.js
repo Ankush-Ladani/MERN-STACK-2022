@@ -12,6 +12,7 @@ router.get(
     res.json({ data: transaction, message: "Successfull" });
   }
 );
+
 router.delete("/:id", async (req, res) => {
   await Transaction.deleteOne({ _id: req.params.id });
   res.json({ message: "success" });

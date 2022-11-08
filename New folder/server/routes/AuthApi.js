@@ -16,9 +16,9 @@ router.post("/register", async (req, res) => {
     });
   }
 
-  const salt = await bcrypt.genSalt(10);
-
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const saltRounds = 10;
+  const salt = await bcrypt.genSaltSync(saltRounds);
+  const hashedPassword = await bcrypt.hashSync(password, salt);
   // console.log(hashedPassword);
 
   const user = await User({
@@ -38,30 +38,29 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(406).json({
+    res.status(406).json({
       message: "User Not Found in DB",
     });
+    return;
   }
 
   const matchPassword = await bcrypt.compare(password, user.password);
 
   if (!matchPassword) {
-    return res.status(406).json({
+    res.status(406).json({
       message: "Password is incorrect",
     });
+    return;
   }
 
-  const token = jwt.sign(
-    { username: email, _id: user._id },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "3d",
-    }
-  );
-  res.json({
-    message: "Successfully Logged in",
-    token,
-  });
+  const payload = {
+    username: email,
+    _id: user._id,
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET);
+  // console.log(token);
+  res.json({ message: "succesfully logged in.", token });
 });
 
 export default router;
