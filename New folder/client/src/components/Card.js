@@ -8,17 +8,28 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import Cookies from "js-cookie";
+import { Box } from "@mui/material";
 
 const InitialForm = {
   amount: "",
   description: "",
   date: new Date(),
+  category_id: "",
 };
+const categories = [
+  { label: "Travel" },
+  { label: "Shopping" },
+  { label: "Investment" },
+  { label: "Bills" },
+];
 export default function TransactionForm({
   fetchTransctions,
   edittransactions,
 }) {
   const [form, setForm] = useState(InitialForm);
+  const token = Cookies.get("token");
 
   const [transactions, setTransactions] = useState([]);
 
@@ -51,6 +62,7 @@ export default function TransactionForm({
         body: JSON.stringify(form),
         headers: {
           "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       reload(res);
@@ -84,7 +96,7 @@ export default function TransactionForm({
       </Typography>
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <Box display="flex" onSubmit={handleSubmit} component="form">
             <TextField
               sx={{ marginRight: 5 }}
               id="outlined-basic"
@@ -120,6 +132,19 @@ export default function TransactionForm({
                   />
                 )}
               />
+              <Autocomplete
+                value={form.category_id}
+                onChange={(event, newValue) => {
+                  setForm({ ...form, category: newValue._id });
+                }}
+                id="controllable-states-demo"
+                options={categories}
+                sx={{ width: 210, marginRight: 5 }}
+                size="small"
+                renderInput={(params) => (
+                  <TextField {...params} label="Category" />
+                )}
+              />
             </LocalizationProvider>
             {edittransactions.amount !== undefined && (
               <Button variant="contained" type="submit">
@@ -131,7 +156,7 @@ export default function TransactionForm({
                 Submit
               </Button>
             )}
-          </form>
+          </Box>
         </CardContent>
       </Card>
     </>

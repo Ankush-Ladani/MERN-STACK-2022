@@ -7,6 +7,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Cookies from "js-cookie";
+
 import Paper from "@mui/material/Paper";
 import { IconButton, Typography } from "@mui/material";
 import dayjs from "dayjs";
@@ -17,11 +19,16 @@ export default function TransactionsList({
   setEditTransactions,
 }) {
   async function remove(_id) {
+    const token = Cookies.get("token");
+
     if (!window.confirm("Are you sure")) return;
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/transaction/${_id}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     if (res.ok) {

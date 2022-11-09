@@ -10,7 +10,7 @@ import {
 
 const router = Router();
 
-router.get("/", passport.authenticate("jwt", { session: false }), index);
+router.get("/", index);
 
 router.delete("/:id", deleteTransaction);
 

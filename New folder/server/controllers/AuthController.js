@@ -4,6 +4,12 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
+  const categories = [
+    { label: "Travel", icon: "user" },
+    { label: "Shopping", icon: "user" },
+    { label: "Investment", icon: "user" },
+    { label: "Bills", icon: "user" },
+  ];
   const userExists = await User.findOne({ email });
 
   // 406 not Acceptable
@@ -23,6 +29,7 @@ export const register = async (req, res) => {
     lastName,
     email,
     password: hashedPassword,
+    categories,
   });
   await user.save();
 
