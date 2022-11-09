@@ -4,6 +4,7 @@ import express from "express";
 import connect from "./database/mongdb.js";
 import TransactionsApi from "./routes/TransactionsApi.js";
 import RegisterUserApi from "./routes/AuthApi.js";
+import UserApi from "./routes/UserApi.js";
 import dotenv from "dotenv";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/transaction", TransactionsApi);
 app.use("/auth", RegisterUserApi);
+app.use("/user", UserApi);
 
 await connect();
 

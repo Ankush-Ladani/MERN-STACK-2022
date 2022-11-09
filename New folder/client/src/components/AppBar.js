@@ -2,6 +2,8 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import { logout } from "../store/auth.js";
+import { useDispatch } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -11,9 +13,11 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ButtonAppBar() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logout = () => {
+  const _logout = () => {
     Cookies.remove("token");
+    dispatch(logout());
     navigate("/login");
   };
   return (
@@ -25,7 +29,7 @@ export default function ButtonAppBar() {
               Expanse Tracker
             </Link>
           </Typography>
-          <Button onClick={logout} color="inherit">
+          <Button onClick={_logout} color="inherit">
             <Link className="text-white" to="/login">
               Logout
             </Link>

@@ -6,13 +6,16 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Cookies from "js-cookie";
 import Link from "@mui/material/Link";
+import { getUser } from "../store/auth.js";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useDispatch } from "react-redux";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -31,12 +34,12 @@ export default function SignIn() {
       body: JSON.stringify(form),
     });
 
-    const { token } = await res.json();
+    const { token, user } = await res.json();
     // console.log("LOGIN ", token);
 
     if (res.ok) {
       Cookies.set("token", token);
-      console.log("Logged In");
+      dispatch(getUser(user));
       navigate("/");
     }
   };
