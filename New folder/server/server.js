@@ -8,7 +8,8 @@ import passport from "passport";
 import passportConfig from "./config/passport.js";
 import routes from "./routes/index.js";
 dotenv.config();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
+const HOST = process.env.HOST || "0.0.0.0";
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,6 +24,6 @@ app.use("/", routes);
 
 await connect();
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log("Server is running at http://localhost:4000");
 });
