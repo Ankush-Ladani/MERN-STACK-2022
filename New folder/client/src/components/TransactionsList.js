@@ -14,7 +14,7 @@ import { IconButton, Typography } from "@mui/material";
 import dayjs from "dayjs";
 
 export default function TransactionsList({
-  transactions,
+  data,
   fetchTransctions,
   setEditTransactions,
 }) {
@@ -57,36 +57,38 @@ export default function TransactionsList({
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((row) => (
-              <TableRow
-                key={row._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center" component="th" scope="row">
-                  {row.amount}
-                </TableCell>
-                <TableCell align="center">{row.description}</TableCell>
-                <TableCell align="center">{formatDate(row.date)}</TableCell>
-                <TableCell align="center">
-                  <IconButton
-                    onClick={() => setEditTransactions(row)}
-                    color="primary"
-                    component="label"
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      remove(row._id);
-                    }}
-                    color="warning"
-                    component="label"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+            {data.map((month) =>
+              month.transactions.map((row) => (
+                <TableRow
+                  key={row._id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {row.amount}
+                  </TableCell>
+                  <TableCell align="center">{row.description}</TableCell>
+                  <TableCell align="center">{formatDate(row.date)}</TableCell>
+                  <TableCell align="center">
+                    <IconButton
+                      onClick={() => setEditTransactions(row)}
+                      color="primary"
+                      component="label"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        remove(row._id);
+                      }}
+                      color="warning"
+                      component="label"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

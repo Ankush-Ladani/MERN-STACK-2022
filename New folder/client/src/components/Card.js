@@ -132,7 +132,7 @@ export default function TransactionForm({
                   />
                 )}
               />
-              <Autocomplete
+              {/* <Autocomplete
                 value={form.category_id}
                 onChange={(event, newValue) => {
                   setForm({ ...form, category: newValue._id });
@@ -144,7 +144,7 @@ export default function TransactionForm({
                 renderInput={(params) => (
                   <TextField {...params} label="Category" />
                 )}
-              />
+              /> */}
             </LocalizationProvider>
             {edittransactions.amount !== undefined && (
               <Button variant="contained" type="submit">

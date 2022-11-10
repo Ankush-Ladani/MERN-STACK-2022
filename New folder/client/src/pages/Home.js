@@ -5,6 +5,7 @@ import { Container } from "@mui/system";
 import Cookies from "js-cookie";
 
 import TransactionsList from "../components/TransactionsList";
+import TransactionChart from "../components/TransactionChart";
 function Home() {
   const [transactions, setTransactions] = useState([]);
   const [edittransactions, setEditTransactions] = useState({});
@@ -25,12 +26,13 @@ function Home() {
   }
   return (
     <Container>
+      <TransactionChart data={transactions} />
       <Card
         edittransactions={edittransactions}
         fetchTransctions={fetchTransctions}
       />
       <TransactionsList
-        transactions={transactions}
+        data={transactions}
         fetchTransctions={fetchTransctions}
         setEditTransactions={setEditTransactions}
       />
